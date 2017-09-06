@@ -15,7 +15,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="two_and_half_fight.svg"
+   sodipodi:docname="two_half_fight.svg"
    inkscape:export-filename="/home/gt/preview.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
@@ -28,16 +28,16 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.49497475"
-     inkscape:cx="501.86205"
-     inkscape:cy="217.92287"
+     inkscape:zoom="0.9899495"
+     inkscape:cx="640.09243"
+     inkscape:cy="87.868414"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      units="px"
-     inkscape:window-width="1438"
+     inkscape:window-width="718"
      inkscape:window-height="898"
-     inkscape:window-x="0"
+     inkscape:window-x="720"
      inkscape:window-y="0"
      inkscape:window-maximized="0" />
   <metadata
@@ -48,7 +48,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -438,7 +438,10 @@
     </g>
     <g
        id="g5162"
-       transform="translate(-14.865582,830.02306)">
+       transform="translate(-14.865582,830.02306)"
+       inkscape:export-filename="/home/gt/dev/two-half-fight/src/core/assets/player.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
       <rect
          y="81.100494"
          x="273.24628"

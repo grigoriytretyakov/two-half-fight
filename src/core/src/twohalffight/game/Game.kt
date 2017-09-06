@@ -8,23 +8,55 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 
 class Game : ApplicationAdapter() {
     internal lateinit var batch: SpriteBatch
-    internal lateinit var img: Texture
+
+    internal lateinit var player: Texture
+
+    internal var x: Float = 0f
+
+    internal var y: Float = 100f
+
+    internal val top: Float = 300f
+
+    internal val bottom: Float = 100f
+
+    internal val moveSpeed: Float = 3f
+
+    internal var jumpSpeed: Float = 7f
 
     override fun create() {
         batch = SpriteBatch()
-        img = Texture("badlogic.jpg")
+        player = Texture("player.png")
     }
 
     override fun render() {
-        Gdx.gl.glClearColor(0.9f, 0.9f, 0.9f, 1f)
+        // left - 666666
+        // right - e6e6e6
+
+        x = if (x > 1440f) {
+            0f
+        }
+        else {
+            x + moveSpeed
+        }
+
+        if (y > top || y < bottom) {
+            jumpSpeed = -jumpSpeed
+        }
+        y += jumpSpeed
+        
+        val color = 0.259f
+        Gdx.gl.glClearColor(color, color, color, 1f)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
+
         batch.begin()
-        batch.draw(img, 0f, 0f)
+        batch.draw(player, x, y)
         batch.end()
     }
 
     override fun dispose() {
         batch.dispose()
-        img.dispose()
+        player.dispose()
     }
 }
+
+
