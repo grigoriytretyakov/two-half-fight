@@ -17,11 +17,15 @@ class Game : ApplicationAdapter() {
 
     internal val top: Float = 300f
 
-    internal val bottom: Float = 100f
+    internal val bottom: Float = 500f
 
     internal val moveSpeed: Float = 3f
 
-    internal var jumpSpeed: Float = 7f
+    internal val jumpMaxSpeed: Float = 20f
+    
+    internal val jumpSlowdown: Float = 1f
+    
+    internal var jumpSpeed: Float = jumpMaxSpeed
 
     override fun create() {
         batch = SpriteBatch()
@@ -32,18 +36,19 @@ class Game : ApplicationAdapter() {
         // left - 666666
         // right - e6e6e6
 
-        x = if (x > 1440f) {
+        x = if (x > 720f) {
             0f
         }
         else {
             x + moveSpeed
         }
 
-        if (y > top || y < bottom) {
-            jumpSpeed = -jumpSpeed
+        if (y < bottom) {
+            jumpSpeed = jumpMaxSpeed
         }
+        jumpSpeed = Math.min(jumpMaxSpeed, jumpSpeed - jumpSlowdown)
         y += jumpSpeed
-        
+
         val color = 0.259f
         Gdx.gl.glClearColor(color, color, color, 1f)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
