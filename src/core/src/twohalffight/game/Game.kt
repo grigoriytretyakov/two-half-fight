@@ -17,9 +17,9 @@ class Game : ApplicationAdapter() {
 
     internal val top: Float = 300f
 
-    internal val bottom: Float = 500f
+    internal val bottom: Float = 100f
 
-    internal val moveSpeed: Float = 3f
+    internal val moveSpeed: Float = 4f
 
     internal val jumpMaxSpeed: Float = 20f
     
