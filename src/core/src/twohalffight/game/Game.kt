@@ -6,11 +6,14 @@ import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 
 class Game : ApplicationAdapter() {
     internal lateinit var batch: SpriteBatch
 
     internal lateinit var player: Texture
+
+    internal lateinit var shapeRenderer: ShapeRenderer
 
     internal val top: Float = 300f
 
@@ -33,6 +36,7 @@ class Game : ApplicationAdapter() {
     override fun create() {
         batch = SpriteBatch()
         player = Texture("player.png")
+        shapeRenderer = ShapeRenderer()
         right = right - player.getWidth().toFloat()
     }
 
@@ -79,12 +83,21 @@ class Game : ApplicationAdapter() {
             y += jumpSpeed
         }
 
-        val color = 0.259f
-        Gdx.gl.glClearColor(color, color, color, 1f)
+        // left - #666666 (0.259f)
+        val left = 0.259f
+        Gdx.gl.glClearColor(left, left, left, 1f)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
+
+        // right - #e6e6e6 (0.902)
+        val rc = 0.902f
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.setColor(rc, rc, rc, 1f);
+        shapeRenderer.rect(640f, 0f, 640f, 720f);
+        shapeRenderer.end();
 
         batch.begin()
         batch.draw(player, x, y)
+        batch.draw(player, right, y)
         batch.end()
     }
 
