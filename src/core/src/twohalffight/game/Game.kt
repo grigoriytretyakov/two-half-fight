@@ -14,41 +14,45 @@ class AI {
 }
 
 
-class SquareJumper(x: Float, y: Float, texture: Texture, batch: SpriteBatch, flip: Boolean, left: Float, right: Float) {
-    internal lateinit var batch: SpriteBatch
+class SquareJumper(
+        private var x: Float,
+        private var y: Float,
+        private val texture: Texture,
+        private val batch: SpriteBatch,
+        private val flip: Boolean,
+        private val left: Float,
+        private val right: Float) {
+// Можно в конструкторе сразу писать private val/var, это будет аналог инициализации в init, только меньше писать
+//    internal lateinit var batch: SpriteBatch
+//
+//    internal lateinit var player: Texture
+//
+//    internal var x: Float = 0f
+//
+//    internal var y: Float = 0f
+//
+//    internal var bottom: Float = 0f
+//
+//    internal var left: Float = 0f
+//
+//    internal var right: Float = 0f
+//
+//    internal var flip: Boolean = false
 
-    internal lateinit var player: Texture
-
-    internal var x: Float = 0f
-
-    internal var y: Float = 0f
-
-    internal var bottom: Float = 0f
-
-    internal var left: Float = 0f
-
-    internal var right: Float = 0f
-
-    internal var flip: Boolean = false
-
-    internal var moveSpeed: Float = -4f
-
-    internal val jumpMaxSpeed: Float = 33f
-    
-    internal val jumpSlowdown: Float = 1.5f
-    
-    internal var jumpSpeed: Float = 0f
-
+    private var moveSpeed: Float = -4f
+    private val jumpMaxSpeed: Float = 33f
+    private val jumpSlowdown: Float = 1.5f
+    private var jumpSpeed: Float = 0f
 
     init {
-        this.batch = batch
-        this.player = texture
-        this.x = x
-        this.y = y
-        this.bottom = y
-        this.left = left
-        this.right = right - player.getWidth().toFloat()
-        this.flip = flip
+//        this.batch = batch
+//        this.player = texture
+//        this.x = x
+//        this.y = y
+//        this.bottom = y
+//        this.left = left
+//        this.right = right - player.getWidth().toFloat()
+//        this.flip = flip
 
         if (flip) {
             moveSpeed = -moveSpeed
@@ -63,27 +67,32 @@ class SquareJumper(x: Float, y: Float, texture: Texture, batch: SpriteBatch, fli
 
     fun update() {
         x = x + moveSpeed
-        x = if (x >= right) {
-            right
+        x = when(x) {
+            >= right -> right
+            <= left -> left
+            else -> x
         }
-        else if (x <= left) {
-            left
-        }
-        else {
-            x
-        }
+//      В котлине существуют идиомы типа этой, куча if-ов заменяется на when (умный switch)
+//        if (x >= right) {
+//            right
+//        }
+//        else if (x <= left) {
+//            left
+//        }
+//        else {
+//            x
+//        }
 
         if (y <= bottom && jumpSpeed != jumpMaxSpeed) {
             jumpSpeed = 0f
             y = bottom
-            if (flip) {
-                moveSpeed = 4f
-            }
-            else {
-                moveSpeed = -4f
-            }
-        }
-        else {
+            moveSpeed = if (flip) 4f else -4f
+//            if (flip) {
+//                moveSpeed = 4f
+//            } else {
+//                moveSpeed = -4f
+//            }
+        } else {
             jumpSpeed = Math.min(jumpMaxSpeed, jumpSpeed - jumpSlowdown)
             y += jumpSpeed
         }
@@ -113,24 +122,18 @@ class SquareJumper(x: Float, y: Float, texture: Texture, batch: SpriteBatch, fli
             false
         )
     }
+
 }
 
-
 class Game : ApplicationAdapter() {
-    internal lateinit var batch: SpriteBatch
 
-    internal lateinit var texture: Texture
-
-    internal lateinit var human: SquareJumper
-
-    internal lateinit var ai: SquareJumper
-
-    internal lateinit var shapeRenderer: ShapeRenderer
-
-    internal val floor: Float = 50f
-
-    internal var width: Float = 1280f
-
+    private lateinit var batch: SpriteBatch
+    private lateinit var texture: Texture
+    private lateinit var human: SquareJumper
+    private lateinit var ai: SquareJumper
+    private lateinit var shapeRenderer: ShapeRenderer
+    private val floor: Float = 50f
+    private var width: Float = 1280f
 
     override fun create() {
         batch = SpriteBatch()
@@ -144,11 +147,9 @@ class Game : ApplicationAdapter() {
     override fun render() {
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
             human.left()
-        }
-        else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+        } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
             human.right()
         }
-
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
             human.jump()
         }
@@ -173,13 +174,11 @@ class Game : ApplicationAdapter() {
         human.draw()
         ai.draw()
         batch.end()
-
     }
 
     override fun dispose() {
         batch.dispose()
         texture.dispose()
     }
+
 }
-
-
