@@ -10,7 +10,9 @@ public class DesktopLauncher {
 		config.width = 1280;
 		config.height = 700;
 
-		config.resizable = false; // For debug when running on XMonad
+		// For debug when running on XMonad
+		//config.resizable = false;
+
 		new LwjglApplication(new Game(), config);
 	}
 }

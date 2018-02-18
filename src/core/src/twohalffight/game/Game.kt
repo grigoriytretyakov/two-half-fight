@@ -14,30 +14,16 @@ class AI {
 }
 
 
-class SquareJumper(
-        private var x: Float,
-        private var y: Float,
-        private val texture: Texture,
-        private val batch: SpriteBatch,
-        private val flip: Boolean,
-        private val left: Float,
-        private val right: Float) {
-// Можно в конструкторе сразу писать private val/var, это будет аналог инициализации в init, только меньше писать
-//    internal lateinit var batch: SpriteBatch
-//
-//    internal lateinit var player: Texture
-//
-//    internal var x: Float = 0f
-//
-//    internal var y: Float = 0f
-//
-//    internal var bottom: Float = 0f
-//
-//    internal var left: Float = 0f
-//
-//    internal var right: Float = 0f
-//
-//    internal var flip: Boolean = false
+class SquareJumper(private var x: Float,
+                   private var y: Float,
+                   private val texture: Texture,
+                   private val batch: SpriteBatch,
+                   private val flip: Boolean,
+                   private val left: Float,
+                   private var right: Float) {
+
+    internal lateinit var player: Texture
+    internal var bottom: Float = 0f
 
     private var moveSpeed: Float = -4f
     private val jumpMaxSpeed: Float = 33f
@@ -45,14 +31,9 @@ class SquareJumper(
     private var jumpSpeed: Float = 0f
 
     init {
-//        this.batch = batch
-//        this.player = texture
-//        this.x = x
-//        this.y = y
-//        this.bottom = y
-//        this.left = left
-//        this.right = right - player.getWidth().toFloat()
-//        this.flip = flip
+        this.player = texture
+        this.bottom = y
+        this.right = right - player.getWidth().toFloat()
 
         if (flip) {
             moveSpeed = -moveSpeed
@@ -67,31 +48,16 @@ class SquareJumper(
 
     fun update() {
         x = x + moveSpeed
-        x = when(x) {
-            >= right -> right
-            <= left -> left
+        x = when {
+            x >= right -> right
+            x <= left -> left
             else -> x
         }
-//      В котлине существуют идиомы типа этой, куча if-ов заменяется на when (умный switch)
-//        if (x >= right) {
-//            right
-//        }
-//        else if (x <= left) {
-//            left
-//        }
-//        else {
-//            x
-//        }
 
         if (y <= bottom && jumpSpeed != jumpMaxSpeed) {
             jumpSpeed = 0f
             y = bottom
             moveSpeed = if (flip) 4f else -4f
-//            if (flip) {
-//                moveSpeed = 4f
-//            } else {
-//                moveSpeed = -4f
-//            }
         } else {
             jumpSpeed = Math.min(jumpMaxSpeed, jumpSpeed - jumpSlowdown)
             y += jumpSpeed
